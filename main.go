@@ -5,7 +5,17 @@ import (
 
 var cliName string = "Pokedex"
 
+type Config struct {
+	Next		string
+	Previous	string
+}
+
 func main(){
-	repl()
+	cfg := &Config {
+		Next: 		"",
+		Previous: 	"",
+	}
+
+	repl(cfg)
 }
 

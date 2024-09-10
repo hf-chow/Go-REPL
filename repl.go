@@ -7,11 +7,13 @@ import (
 	"strings"
 )
 
-func repl() {
+
+func repl(cfg *Config) {
     scanner := bufio.NewScanner(os.Stdin)
     printPrompt()
 
     for scanner.Scan() {
+
         printPrompt()
 
         words := cleanInput(scanner.Text())
@@ -24,13 +26,14 @@ func repl() {
 
         command, exists := getCommands()[commandName]
         if exists {
-            err := command.callback()
+            err := command.callback(cfg)
             if err != nil {
                 fmt.Println(err)
             }
             continue
         } else {
-            commandInvalid()
+            commandInvalid(cfg)
+			printPrompt()
             continue
         }
     }
@@ -39,11 +42,22 @@ func repl() {
 type cliCommand struct {
     name        string
     description string
-    callback    func() error
+    callback    func(*Config) error
 }
 
 func getCommands() map[string]cliCommand {
     return map[string]cliCommand{
+        "map": {
+            name:           "map",
+            description:    "Displays the first 20 or next 20 locations",
+            callback:       commandMap,
+        },
+        "mapb": {
+            name:           "map back",
+            description:    "Displays the previous 20 locations",
+            callback:       commandMapBack,
+        },
+
         "help": {
             name:           "help",
             description:    "Displays a help message",
