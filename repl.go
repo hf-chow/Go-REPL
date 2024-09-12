@@ -7,10 +7,18 @@ import (
 	"strings"
 )
 
+type cliCommand struct {
+    name        string
+    description string
+    callback    func(*Config) error
+}
 
 func repl(cfg *Config) {
     scanner := bufio.NewScanner(os.Stdin)
     printPrompt()
+
+	cfg.Next = ""
+	cfg.Previous = ""
 
     for scanner.Scan() {
 
@@ -24,7 +32,7 @@ func repl(cfg *Config) {
 
         commandName := words[0]
 
-        command, exists := getCommands()[commandName]
+        command, exists := getCommands(cfg)[commandName]
         if exists {
             err := command.callback(cfg)
             if err != nil {
@@ -39,13 +47,7 @@ func repl(cfg *Config) {
     }
 }
 
-type cliCommand struct {
-    name        string
-    description string
-    callback    func(*Config) error
-}
-
-func getCommands() map[string]cliCommand {
+func getCommands(cfg *Config) map[string]cliCommand {
     return map[string]cliCommand{
         "map": {
             name:           "map",

@@ -22,6 +22,10 @@ func commandMap(cfg *Config) error {
 
 	var location Location
 
+	if cfg.Next == "" {
+		cfg.Next = "https://pokeapi.co/api/v2/location/"
+	}
+
 	resp, err := http.Get(cfg.Next)
 	if err != nil {
 		return fmt.Errorf("error when getting locations: %v", err)
