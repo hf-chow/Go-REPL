@@ -5,49 +5,53 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/hf-chow/pokedexcli/internal/pokeapi"
 )
 
-type cliCommand struct {
-    name        string
-    description string
-    callback    func(*Config) error
+type config struct {
+	pokeapiClient	pokeapi.Client
+	nextLocationURL	*string
+	prevLocationURL	*string
 }
 
-func repl(cfg *Config) {
-    scanner := bufio.NewScanner(os.Stdin)
+type cliCommand struct {
+	name 		string
+	description	string
+	callback	func(*config) error
+}
+
+func startRepl(cfg *config) {
+    reader := bufio.NewScanner(os.Stdin)
     printPrompt()
 
-	cfg.Next = ""
-	cfg.Previous = ""
-
-    for scanner.Scan() {
-
+    for {
         printPrompt()
+		reader.Scan()
 
         words := cleanInput(scanner.Text())
-
         if len (words) == 0 {
             continue
         }
 
         commandName := words[0]
 
-        command, exists := getCommands(cfg)[commandName]
+        command, exists := getCommands()[commandName]
         if exists {
-            err := command.callback(cfg)
+            err := command.callback()
             if err != nil {
                 fmt.Println(err)
             }
             continue
         } else {
-            commandInvalid(cfg)
+            commandInvalid()
 			printPrompt()
             continue
         }
     }
 }
 
-func getCommands(cfg *Config) map[string]cliCommand {
+func getCommands(cfg *config) map[string]cliCommand {
     return map[string]cliCommand{
         "map": {
             name:           "map",

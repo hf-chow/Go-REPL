@@ -1,21 +1,16 @@
 package main 
 
 import (
+	"time"
+	"github.com/hf-chow/pokedexcli/internal/pokeapi"
 )
 
-var cliName string = "Pokedex"
-
-type Config struct {
-	Next		string
-	Previous	string
-}
-
 func main(){
-	cfg := &Config {
-		Next: 		"",
-		Previous: 	"",
+	pokeClient := pokeapi.NewClient(5*time.Second, time.Minute*5)
+	cfg := &config{
+		pokeClient: pokeClient,
 	}
 
-	repl(cfg)
+	startRepl(cfg)
 }
 
