@@ -23,13 +23,12 @@ type cliCommand struct {
 
 func startRepl(cfg *config) {
     reader := bufio.NewScanner(os.Stdin)
-    printPrompt()
 
     for {
         printPrompt()
 		reader.Scan()
 
-        words := cleanInput(scanner.Text())
+        words := cleanInput(reader.Text())
         if len (words) == 0 {
             continue
         }
@@ -38,30 +37,29 @@ func startRepl(cfg *config) {
 
         command, exists := getCommands()[commandName]
         if exists {
-            err := command.callback()
+            err := command.callback(cfg)
             if err != nil {
                 fmt.Println(err)
             }
             continue
         } else {
-            commandInvalid()
-			printPrompt()
+			fmt.Println("Unknown command")
             continue
         }
     }
 }
 
-func getCommands(cfg *config) map[string]cliCommand {
+func getCommands() map[string]cliCommand {
     return map[string]cliCommand{
         "map": {
             name:           "map",
             description:    "Displays the first 20 or next 20 locations",
-            callback:       commandMap,
+            callback:       commandMapf,
         },
         "mapb": {
             name:           "map back",
             description:    "Displays the previous 20 locations",
-            callback:       commandMapBack,
+            callback:       commandMapb,
         },
 
         "help": {

@@ -6,26 +6,26 @@ import (
 )
 
 func printPrompt() {
-	fmt.Println(cliName, " > ")
+	fmt.Print("Pokedex > ")
 }
 
-func commandHelp(cfg *Config) error {
+func commandHelp(cfg *config) error {
     fmt.Println("Welcome to the Pokedex!")
     fmt.Println("Usage:")
     fmt.Println()
 	for _, cmd := range getCommands() {
-		fmt.Printf("%s: %s\n", cmd.name, cmd.cmd.description)
+		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
 	fmt.Println()
     return nil
 }
 
-func commandExit(cfg *Config) error {
+func commandExit(cfg *config) error {
     os.Exit(0)
     return nil
 }
 
-func commandInvalid(cfg *Config) {
+func commandInvalid(cfg *config) {
     fmt.Println("Invalid command")
 }
 
