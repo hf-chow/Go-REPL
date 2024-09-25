@@ -18,7 +18,7 @@ type config struct {
 type cliCommand struct {
 	name 		string
 	description	string
-	callback	func(*config) error
+	callback	func(c *config, param string) error
 }
 
 func startRepl(cfg *config) {
@@ -29,28 +29,51 @@ func startRepl(cfg *config) {
 		reader.Scan()
 
         words := cleanInput(reader.Text())
-        if len (words) == 0 {
+        if len(words) == 0 {
             continue
         }
-
-        commandName := words[0]
-
-        command, exists := getCommands()[commandName]
-        if exists {
-            err := command.callback(cfg)
-            if err != nil {
-                fmt.Println(err)
-            }
-            continue
-        } else {
-			fmt.Println("Unknown command")
-            continue
-        }
+		
+		if len(words) == 1 {
+			commandName := words[0]
+			param := ""
+			command, exists := getCommands()[commandName]
+			if exists {
+				err := command.callback(cfg, param)
+				if err != nil {
+					fmt.Println(err)
+				}
+				continue
+			} else {
+				fmt.Println("Unknown command")
+				continue
+			}
+		}
+		
+		if len(words) == 2 {
+			commandName := words[0]
+			param := words[1]
+			command, exists := getCommands()[commandName]
+			if exists {
+				err := command.callback(cfg, param)
+				if err != nil {
+					fmt.Println(err)
+				}
+				continue
+			} else {
+				fmt.Println("Unknown command")
+				continue
+			}
+		}
     }
 }
 
 func getCommands() map[string]cliCommand {
     return map[string]cliCommand{
+        "explore": {
+            name:           "explore",
+            description:    "Displays the pokemons in this location",
+            callback:       commandExplore,
+        },
         "map": {
             name:           "map",
             description:    "Displays the first 20 or next 20 locations",

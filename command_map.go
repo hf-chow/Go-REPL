@@ -17,7 +17,7 @@ type ResourceList struct {
 	URL			string
 }
 
-func commandMapf(cfg *config) error {
+func commandMapf(cfg *config, param string) error {
 	locationResp, err := cfg.pokeapiClient.ListLocations(cfg.nextLocationURL)
 	if err != nil {
 		return err
@@ -32,7 +32,7 @@ func commandMapf(cfg *config) error {
 	return nil
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, param string) error {
 	if cfg.prevLocationURL == nil {
 		return errors.New("you are on the first page")
 	}

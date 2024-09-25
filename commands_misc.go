@@ -9,7 +9,7 @@ func printPrompt() {
 	fmt.Print("Pokedex > ")
 }
 
-func commandHelp(cfg *config) error {
+func commandHelp(cfg *config, param string) error {
     fmt.Println("Welcome to the Pokedex!")
     fmt.Println("Usage:")
     fmt.Println()
@@ -20,12 +20,12 @@ func commandHelp(cfg *config) error {
     return nil
 }
 
-func commandExit(cfg *config) error {
+func commandExit(cfg *config, param string) error {
     os.Exit(0)
     return nil
 }
 
-func commandInvalid(cfg *config) {
+func commandInvalid(cfg *config, param string) {
     fmt.Println("Invalid command")
 }
 
