@@ -21,3 +21,14 @@ type Pokemon struct {
 	stats					[]PokemonStat		`json:"stats"`
 	types					[]PokemonType		`json:"types"`
 }
+
+type PokemonStat struct {
+	Name		string	`json:"stat"`
+	Effort		int		`json:"effort"`
+	BaseStat	int		`json:"base_stat"`
+}
+
+type PokemonType struct {
+	Slot		int		`json:"slot"`
+	Type		string	`json:"type"`
+}
