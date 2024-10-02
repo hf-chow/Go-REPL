@@ -12,38 +12,38 @@ type RespEncounters struct {
 
 type PokemonEncounters struct {
 	Pokemon		Pokemon		`json:"pokemon"`
-	-			string		`json:"version_details"`
+	_			string		`json:"version_details"`
 }
 
 type EncounterMethodRate struct {
-	EncounterMethod		EncounterMethod
-	_					
+	EncounterMethod		EncounterMethod 	`json:"encounter_method"`
+	_					string				`json:"version_details"`
+						
 }
-
-type EncounterVersionDetail struct {
-	Rate			int
-	Version			EncounterVersionDetails
-}
-
 
 type EncounterMethod struct {
-	ID			int
-	Name		string
-	Names		[]string
-	Values		[]EncounterConditionValue
+	ID			int							`json:"id"`
+	Name		string						`json:"name"`
+	Order		int							`json:"order"`
+	Names		[]Name						`json:"names"`
 }
 
 type EncounterConditionValue struct {
-	ID 			int
-	Name		string
-	Condition	EncounterCondition
-	Names		[]string
+	ID 			int						`json:"id"`
+	Name		string					`json:"name"`
+	Condition	EncounterCondition		`json:"condition"`
+	Names		[]Name					`json:"names"`
 }
 
 type EncounterCondition struct {
-	ID			int
-	Name		string
-	Names		[]string
-	Values		[]EncounterConditionValue
+	ID			int							`json:"id"`
+	Name		string						`json:"name"`
+	Names		[]Name						`json:"names"`
+	Values		[]EncounterConditionValue	`json:"values"`
+}
+
+type Name struct {
+	Name	string	`json:"name"`
+	Url		string	`json:"url"`
 }
 
