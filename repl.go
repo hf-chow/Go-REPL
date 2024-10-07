@@ -18,7 +18,7 @@ type config struct {
 type cliCommand struct {
 	name 		string
 	description	string
-	callback	func(c *config, param string) error
+	callback	func(c *config, args ...string) error
 }
 
 func startRepl(cfg *config) {
@@ -32,40 +32,27 @@ func startRepl(cfg *config) {
         if len(words) == 0 {
             continue
         }
-		
-		if len(words) == 1 {
-			commandName := words[0]
-			param := ""
-			command, exists := getCommands()[commandName]
-			if exists {
-				err := command.callback(cfg, param)
-				if err != nil {
-					fmt.Println(err)
-				}
-				continue
+
+		commandName := words[0]
+		args := []string{}
+		if len(words) > 1 {
+			args = words[1:]
+		}
+
+		command, exists := getCommands()[commandName]
+		if exists{
+			err := command.callback(cfg, args...)
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
 			} else {
 				fmt.Println("Unknown command")
 				continue
 			}
-		}
-		
-		if len(words) == 2 {
-			commandName := words[0]
-			param := words[1]
-			command, exists := getCommands()[commandName]
-			if exists {
-				err := command.callback(cfg, param)
-				if err != nil {
-					fmt.Println(err)
-				}
-				continue
-			} else {
-				fmt.Println("Unknown command")
-				continue
-			}
-		}
-    }
+	}
 }
+
 
 func getCommands() map[string]cliCommand {
     return map[string]cliCommand{

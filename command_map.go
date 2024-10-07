@@ -5,19 +5,7 @@ import (
 	"fmt"
 )
 
-type Location struct {
-	Count		int
-	Next		string
-	Previous	string
-	Results		[]ResourceList
-}
-
-type ResourceList struct {
-	Name		string
-	URL			string
-}
-
-func commandMapf(cfg *config, param string) error {
+func commandMapf(cfg *config, args ...string) error {
 	locationResp, err := cfg.pokeapiClient.ListLocations(cfg.nextLocationURL)
 	if err != nil {
 		return err
@@ -32,7 +20,7 @@ func commandMapf(cfg *config, param string) error {
 	return nil
 }
 
-func commandMapb(cfg *config, param string) error {
+func commandMapb(cfg *config, args ...string) error {
 	if cfg.prevLocationURL == nil {
 		return errors.New("you are on the first page")
 	}

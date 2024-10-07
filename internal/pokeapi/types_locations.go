@@ -16,7 +16,7 @@ type RespShallowLocations struct {
 	Count 		int				`json:"count"`
 	Next		*string			`json:"next"`
 	Previous	*string			`json:"Previous"`
-	Results		ResourceList	`json:"results"` 
+	Results		[]ResourceList	`json:"results"` 
 }
 
 type RespLocationArea struct {
