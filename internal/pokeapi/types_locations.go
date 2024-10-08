@@ -1,12 +1,5 @@
 package pokeapi
 
-type Location struct {
-	Count		int
-	Next		string
-	Previous	string
-	Results		[]ResourceList
-}
-
 type ResourceList struct {
 	Name string `json:"name"`
 	URL	 string `json:"url"`
@@ -19,13 +12,27 @@ type RespShallowLocations struct {
 	Results		[]ResourceList	`json:"results"` 
 }
 
-type RespLocationArea struct {
+type RespLocation struct {
 	ID							int						`json:"id"`
 	Name						string					`json:"name"`
 	Game_index					int						`json:"game_index"`
 	EncouterMethodRates			[]EncounterMethodRate	`json:"encounter_method_rates"`
 	Location					Location				`json:"location"`
-	Names						[]string				`json:"names"`
+	Names						[]Names					`json:"names"`
 	PokemonEncounters			[]PokemonEncounters		`json:"pokemon_encounters"`
 }
 
+type Location struct {
+	Name string `json:"name"`
+	URL	 string `json:"url"`
+}
+
+type Names struct {
+	Language 	Language	`json:"language"`
+	Name 		string		`json:"name"`
+}
+
+type Language struct {
+	Name	string	`json:"name"`
+	URL		string	`json:"url"`
+}
