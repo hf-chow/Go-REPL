@@ -34,5 +34,4 @@ func (c *Client) GetPokemon(name string) (RespPokemon, error) {
 
 	c.cache.Add(url, dat)
 	return pokemonResp, nil
-
  }
