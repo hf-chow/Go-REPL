@@ -13,7 +13,7 @@ type config struct {
 	pokeapiClient	pokeapi.Client
 	nextLocationURL	*string
 	prevLocationURL	*string
-	pokemonCaught	map[string]RespPokemon
+	pokemonCaught	map[string]pokeapi.Pokemon
 }
 
 type cliCommand struct {
@@ -24,6 +24,7 @@ type cliCommand struct {
 
 func startRepl(cfg *config) {
     reader := bufio.NewScanner(os.Stdin)
+	cfg.pokemonCaught = make(map[string]pokeapi.Pokemon)
 
     for {
         printPrompt()
@@ -57,6 +58,11 @@ func startRepl(cfg *config) {
 
 func getCommands() map[string]cliCommand {
     return map[string]cliCommand{
+		"catch": {
+			name: 			"catch",
+			description: 	"Attempt to catch a pokemon",
+			callback:		commandCatch,
+		},
         "explore": {
             name:           "explore",
             description:    "Displays the pokemons in this location",

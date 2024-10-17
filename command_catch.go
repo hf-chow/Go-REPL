@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"math/rand"
 	"strconv"
 )
@@ -17,22 +18,24 @@ func commandCatch(cfg *config, args ...string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Throwing a Pokeball at %s...", name)
+	fmt.Printf("Throwing a Pokeball at %s...\n", name)
 
 	exp := pokemon.BaseExperience
 	success := catchSuccess(exp)
 	if (success) {
-		fmt.Printf("%s was caught!", name)
+		fmt.Printf("%s was caught!\n", name)
+		cfg.pokemonCaught[name] = pokemon
 	} else {
-		fmt.Printf("%s excaped!")
+		fmt.Printf("%s excaped!\n", name)
 	}
 	return nil
 }
 
 func catchSuccess(exp int) bool {
 	success_prob := rand.Float32()
-	exp_mod := float32(exp)/float32((len(strconv.Itoa(exp))+1))
+	exp_mod := float32(exp)/float32(math.Pow10(len(strconv.Itoa(exp))+1))
 	success_prob -= exp_mod
+	fmt.Printf("Success Prob: %d\n", success_prob)
 	if (success_prob > 0.5) {
 		return true
 	}
