@@ -8,14 +8,14 @@ type Pokemon struct {
 	IsDefault				bool				`json:"is_default"`
 	Order					int					`json:"order"`
 	Weight					int					`json:"weight"`
-	stats					[]PokemonStat		`json:"stats"`
-	types					[]PokemonType		`json:"types"`
+	Stats					[]PokemonStats		`json:"stats"`
+	Types					[]PokemonType		`json:"types"`
 }
 
-type PokemonStat struct {
-	Name		string	`json:"stat"`
-	Effort		int		`json:"effort"`
-	BaseStat	int		`json:"base_stat"`
+type PokemonStats struct {
+	Stat		string		`json:"stat"`
+	Effort		int			`json:"effort"`
+	BaseStat	int			`json:"base_stat"`
 }
 
 type PokemonType struct {
