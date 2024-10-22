@@ -9,13 +9,19 @@ type Pokemon struct {
 	Order					int					`json:"order"`
 	Weight					int					`json:"weight"`
 	Stats					[]PokemonStats		`json:"stats"`
-	Types					[]PokemonType		`json:"types"`
 }
 
 type PokemonStats struct {
-	Stat		string		`json:"stat"`
+	Stat		Stat		`json:"stat"`
 	Effort		int			`json:"effort"`
 	BaseStat	int			`json:"base_stat"`
+}
+
+type Stat struct {
+	ID 				int			`json:"id"`
+	Name			string		`json:"name"`
+	GameIndex		int			`json:"game_index"`
+	IsBattleOnly	bool		`json:"is_battle_only"`
 }
 
 type PokemonType struct {

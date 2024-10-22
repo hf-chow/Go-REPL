@@ -12,7 +12,7 @@ func commandInspect(cfg *config, args ...string) error {
 	name := args[0]
 	pokemon, ok := cfg.pokemonCaught[name]
 	if ok {
-		fmt.Printf("-hp: %s", pokemon.Stats[0].Stat)
+		fmt.Printf("-hp: %d\n", pokemon.Stats[0].BaseStat)
 	} else {
 		return errors.New("no such pokemon in the inventory")
 	}
