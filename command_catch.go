@@ -35,7 +35,6 @@ func catchSuccess(exp int) bool {
 	success_prob := rand.Float32()
 	exp_mod := float32(exp)/float32(math.Pow10(len(strconv.Itoa(exp))+1))
 	success_prob -= exp_mod
-	fmt.Printf("Success Prob: %d\n", success_prob)
 	if (success_prob > 0.5) {
 		return true
 	}
